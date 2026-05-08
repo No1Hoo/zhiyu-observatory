@@ -5,6 +5,7 @@ import { fingerprintRawItem } from "@/lib/ingestion/dedupe";
 import { ingestItems } from "@/lib/ingestion/pipeline";
 
 async function resetIngestionTables() {
+  await prisma.ingestionRun.deleteMany();
   await prisma.intelItem.deleteMany();
   await prisma.rawItem.deleteMany();
   await prisma.priceObservation.deleteMany();

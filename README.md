@@ -11,7 +11,8 @@
 - 来源管理
 - 审核工作台
 - 内容、专题、广告位管理
-- 样本 ingestion 管线
+- 采集运行记录、来源健康和样本 ingestion 管线
+- 受保护的定时采集 API
 
 ## 本地运行
 
@@ -28,6 +29,42 @@ npm run dev
 
 - Public site: http://localhost:3000
 - Admin: http://localhost:3000/admin
+- Ingestion workbench: http://localhost:3000/admin/ingestion
+
+## 采集
+
+本地手动采集：
+
+```bash
+npm run ingest:sample
+```
+
+线上定时采集入口：
+
+```text
+POST /api/cron/ingest
+Authorization: Bearer <CRON_SECRET>
+```
+
+采集结果会进入后台审核闭环，不会自动发布到公共页面。
+
+## 部署与定时任务
+
+需要配置环境变量：
+
+```text
+DATABASE_URL=<production database url>
+CRON_SECRET=<long random secret>
+```
+
+如果使用 GitHub Actions 调用线上采集接口，在仓库 Secrets 中配置：
+
+```text
+ZHIYU_INGEST_URL=https://your-domain.com/api/cron/ingest
+CRON_SECRET=<same secret as deployment>
+```
+
+`.github/workflows/ingest-cron.yml` 默认每天 UTC 22:15 运行，也可以在 GitHub Actions 手动触发。
 
 ## 测试
 
