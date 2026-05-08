@@ -3,6 +3,7 @@ import Link from "next/link";
 const adminNav = [
   { label: "Dashboard", href: "/admin" },
   { label: "Sources", href: "/admin/sources" },
+  { label: "Ingestion", href: "/admin/ingestion" },
   { label: "Review Queue", href: "/admin/review" },
   { label: "Content", href: "/admin/content" },
   { label: "Topics/Ads", href: "/admin/topics-ads" }

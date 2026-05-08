@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
+import { runSampleIngestion } from "@/lib/ingestion/runs";
 
 export async function publishIntelItem(id: string) {
   await prisma.intelItem.update({
@@ -38,4 +39,13 @@ export async function toggleSource(id: string, enabled: boolean) {
     data: { enabled }
   });
   revalidatePath("/admin/sources");
+}
+
+export async function triggerSampleIngestion() {
+  await runSampleIngestion({ trigger: "manual" });
+  revalidatePath("/");
+  revalidatePath("/today");
+  revalidatePath("/admin");
+  revalidatePath("/admin/ingestion");
+  revalidatePath("/admin/review");
 }

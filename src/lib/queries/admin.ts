@@ -43,3 +43,38 @@ export async function getTopicsAndAds() {
   ]);
   return { topics, adSlots };
 }
+
+export async function getAdminIngestionDashboard() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const [latestRun, runsToday, createdToday, risksToday, runs, sources] = await Promise.all([
+    prisma.ingestionRun.findFirst({ orderBy: { startedAt: "desc" }, include: { source: true } }),
+    prisma.ingestionRun.count({ where: { startedAt: { gte: today } } }),
+    prisma.ingestionRun.aggregate({
+      where: { startedAt: { gte: today } },
+      _sum: { itemsCreated: true }
+    }),
+    prisma.ingestionRun.aggregate({
+      where: { startedAt: { gte: today } },
+      _sum: { riskCount: true }
+    }),
+    prisma.ingestionRun.findMany({
+      include: { source: true },
+      orderBy: { startedAt: "desc" },
+      take: 20
+    }),
+    prisma.source.findMany({
+      orderBy: [{ enabled: "desc" }, { lastCrawledAt: "desc" }, { name: "asc" }]
+    })
+  ]);
+
+  return {
+    latestRun,
+    runsToday,
+    createdToday: createdToday._sum.itemsCreated ?? 0,
+    risksToday: risksToday._sum.riskCount ?? 0,
+    runs,
+    sources
+  };
+}
