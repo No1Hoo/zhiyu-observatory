@@ -1,0 +1,109 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Source {
+  id                String             @id @default(cuid())
+  name              String
+  url               String
+  type              String
+  country           String
+  crawlMethod       String
+  crawlFrequency    String
+  crawlLimit        Int                @default(20)
+  trustLevel        Int                @default(3)
+  enabled           Boolean            @default(true)
+  defaultReview     String             @default("PENDING_REVIEW")
+  lastCrawledAt     DateTime?
+  lastStatus        String             @default("never_run")
+  lastError         String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  rawItems          RawItem[]
+  intelItems        IntelItem[]
+  priceObservations PriceObservation[]
+}
+
+model RawItem {
+  id            String       @id @default(cuid())
+  sourceId      String
+  source        Source       @relation(fields: [sourceId], references: [id])
+  originalTitle String
+  originalUrl   String
+  publishedAt   DateTime?
+  fetchedAt     DateTime     @default(now())
+  rawSummary    String?
+  fingerprint   String       @unique
+  status        String   @default("DRAFT")
+  intelItem     IntelItem?
+}
+
+model IntelItem {
+  id                String        @id @default(cuid())
+  rawItemId         String?       @unique
+  rawItem           RawItem?      @relation(fields: [rawItemId], references: [id])
+  sourceId          String
+  source            Source        @relation(fields: [sourceId], references: [id])
+  title             String
+  slug              String        @unique
+  aiSummary         String
+  editorSummary     String?
+  category          String
+  tags              String
+  species           String?
+  equipment         String?
+  region            String?
+  status            String        @default("PENDING_REVIEW")
+  isFeatured        Boolean       @default(false)
+  riskLevel         Int           @default(1)
+  sourceUrl         String
+  sourcePublishedAt DateTime?
+  publishedAt       DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model PriceObservation {
+  id         String       @id @default(cuid())
+  sourceId   String
+  source     Source       @relation(fields: [sourceId], references: [id])
+  species    String
+  region     String
+  market     String
+  price      Float
+  unit       String
+  observedAt DateTime
+  sourceUrl  String
+  status     String   @default("PENDING_REVIEW")
+  note       String?
+  createdAt  DateTime     @default(now())
+}
+
+model Topic {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String
+  tags        String
+  sponsored   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model AdSlot {
+  id        String   @id @default(cuid())
+  name      String
+  page      String
+  position  String
+  sizeHint  String
+  enabled   Boolean  @default(true)
+  label     String   @default("广告合作")
+  content   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
