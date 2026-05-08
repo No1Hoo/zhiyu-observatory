@@ -36,6 +36,7 @@ npm run dev
 本地手动采集：
 
 ```bash
+npm run ingest:official
 npm run ingest:sample
 ```
 
@@ -46,7 +47,7 @@ POST /api/cron/ingest
 Authorization: Bearer <CRON_SECRET>
 ```
 
-采集结果会进入后台审核闭环，不会自动发布到公共页面。
+`ingest:official` 会抓取配置中的官方公开网页列表，`ingest:sample` 只用于本地演示。采集结果会进入后台审核闭环，不会自动发布到公共页面。
 
 ## 部署与定时任务
 

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { isAuthorizedCronRequest } from "@/lib/cron/auth";
-import { runSampleIngestion } from "@/lib/ingestion/runs";
+import { runOfficialWebIngestion } from "@/lib/ingestion/runs";
 
 export async function POST(request: Request) {
   if (!isAuthorizedCronRequest(request, process.env.CRON_SECRET)) {
@@ -8,10 +8,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    const run = await runSampleIngestion({ trigger: "cron" });
+    const run = await runOfficialWebIngestion({ trigger: "cron" });
     return NextResponse.json({
-      id: run.id,
-      status: run.status,
+      status: run.sourcesFailed > 0 ? "partial" : "success",
+      sourcesSeen: run.sourcesSeen,
+      sourcesSucceeded: run.sourcesSucceeded,
+      sourcesFailed: run.sourcesFailed,
       itemsSeen: run.itemsSeen,
       itemsCreated: run.itemsCreated,
       duplicates: run.duplicates,

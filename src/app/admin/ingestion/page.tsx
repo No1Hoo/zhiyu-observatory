@@ -1,4 +1,4 @@
-import { triggerSampleIngestion } from "@/app/actions/admin";
+import { triggerOfficialIngestion, triggerSampleIngestion } from "@/app/actions/admin";
 import { IngestionRunTable } from "@/components/admin/IngestionRunTable";
 import { MetricCard } from "@/components/admin/MetricCard";
 import { SourceHealthTable } from "@/components/admin/SourceHealthTable";
@@ -14,11 +14,18 @@ export default async function AdminIngestionPage() {
           <p className="text-sm font-medium uppercase tracking-[0.24em] text-cyan-700">Operations</p>
           <h1 className="text-3xl font-bold text-ink">Ingestion</h1>
         </div>
-        <form action={triggerSampleIngestion}>
-          <button className="rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white hover:bg-lagoon">
-            手动触发样本采集
-          </button>
-        </form>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <form action={triggerOfficialIngestion}>
+            <button className="rounded-md bg-ink px-4 py-2 text-sm font-semibold text-white hover:bg-lagoon">
+              手动触发官方来源采集
+            </button>
+          </form>
+          <form action={triggerSampleIngestion}>
+            <button className="rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-ink hover:bg-slate-50">
+              样本采集
+            </button>
+          </form>
+        </div>
       </div>
 
       <div className="mt-6 grid gap-4 md:grid-cols-4">
