@@ -12,7 +12,8 @@
     "db:generate": "prisma generate",
     "db:migrate": "tsx scripts/apply-sqlite-schema.ts",
     "db:seed": "tsx prisma/seed.ts",
-    "ingest:sample": "tsx scripts/ingest-sample.ts"
+    "ingest:sample": "tsx scripts/ingest-sample.ts",
+    "ingest:official": "tsx scripts/ingest-official.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
