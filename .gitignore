@@ -1,8 +1,12 @@
 .DS_Store
 node_modules/
 dist/
+.next/
+test-results/
+playwright-report/
 .env
 .env.*
+!.env.example
 .superpowers/
 .worktrees/
 prisma/*.db
