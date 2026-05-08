@@ -8,7 +8,7 @@
     "start": "next start",
     "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
-    "test:e2e": "playwright test",
+    "test:e2e": "bash scripts/run-e2e.sh",
     "db:generate": "prisma generate",
     "db:migrate": "tsx scripts/apply-sqlite-schema.ts",
     "db:seed": "tsx prisma/seed.ts",

@@ -18,6 +18,13 @@ export function SiteHeader() {
           ))}
         </nav>
       </div>
+      <nav className="flex gap-4 overflow-x-auto px-5 pb-3 text-sm text-foam/80 md:hidden">
+        {NAV_ITEMS.map((item) => (
+          <Link key={item.href} href={item.href} className="shrink-0 hover:text-aqua">
+            {item.label}
+          </Link>
+        ))}
+      </nav>
     </header>
   );
 }
