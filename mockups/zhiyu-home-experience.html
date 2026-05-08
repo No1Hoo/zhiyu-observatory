@@ -1,0 +1,85 @@
+<h2>智渔观察：首页体验选择</h2>
+<p class="subtitle">视觉方向已定为“科技观察台”。现在决定用户每天打开首页时，第一眼应该看到什么。</p>
+
+<div class="cards">
+  <div class="card" data-choice="daily" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">1：日报型</div>
+        <div class="mockup-body" style="background:#071b21;color:#dff8f2;">
+          <div class="mock-nav" style="background:#0e3037;color:#dff8f2;">智渔观察｜今日日报｜技术｜设备｜行情</div>
+          <div class="placeholder" style="background:#123943;color:#dff8f2;">今日 8 条必须关注的水产情报</div>
+          <div class="placeholder" style="background:#ffffff;color:#102025;">逐条精选摘要，阅读压力小</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>1. 日报型</h3>
+      <p>像每天一份行业早报，适合建立回访习惯。缺点是数据感稍弱。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dashboard" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">2：看板型</div>
+        <div class="mockup-body" style="background:#071b21;color:#dff8f2;">
+          <div class="mock-nav" style="background:#0e3037;color:#dff8f2;">智渔观察｜趋势雷达｜价格｜AI｜供应链</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="placeholder" style="background:#123943;color:#dff8f2;">技术热度</div>
+            <div class="placeholder" style="background:#123943;color:#dff8f2;">价格异动</div>
+            <div class="placeholder" style="background:#123943;color:#dff8f2;">设备趋势</div>
+            <div class="placeholder" style="background:#123943;color:#dff8f2;">海外动态</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>2. 看板型</h3>
+      <p>科技感最强，适合“观察台”定位。缺点是早期数据不够多时容易显空。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hybrid" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">3：混合型</div>
+        <div class="mockup-body" style="background:#071b21;color:#dff8f2;">
+          <div class="mock-nav" style="background:#0e3037;color:#dff8f2;">智渔观察｜今日情报｜趋势雷达｜技术设备｜价格观察</div>
+          <div class="placeholder" style="background:#123943;color:#dff8f2;">顶部：今日 5 条核心情报</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+            <div class="placeholder" style="background:#0f3e47;color:#dff8f2;">AI 热点</div>
+            <div class="placeholder" style="background:#0f3e47;color:#dff8f2;">设备热度</div>
+            <div class="placeholder" style="background:#0f3e47;color:#dff8f2;">价格异动</div>
+          </div>
+          <div class="placeholder" style="background:#ffffff;color:#102025;">下方：可筛选信息流</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>3. 混合型</h3>
+      <p>顶部有科技感和每日精选，中下方保留信息流和 SEO 内容。最适合 MVP。</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>我的推荐：3</h4>
+      <ul>
+        <li>既符合“科技观察台”，又能持续沉淀内容</li>
+        <li>早期数据少也能靠精选情报撑住首页</li>
+        <li>后期广告位可自然放在信息流和专题区</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>设计原则</h4>
+      <ul>
+        <li>首屏深色科技感，下方阅读区浅色或高对比</li>
+        <li>动效用于趋势雷达和数据卡片，不干扰文章阅读</li>
+        <li>广告位低调、可信，不破坏公益形象</li>
+      </ul>
+    </div>
+  </div>
+</div>

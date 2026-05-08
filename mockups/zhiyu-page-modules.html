@@ -1,0 +1,83 @@
+<h2>智渔观察：首页与核心功能模块</h2>
+<p class="subtitle">已确认：科技观察台 + 混合型首页。下面是第一版建议页面结构。</p>
+
+<div class="mockup">
+  <div class="mockup-header">首页布局草案</div>
+  <div class="mockup-body" style="background:#071b21;color:#dff8f2;">
+    <div class="mock-nav" style="background:#0e3037;color:#dff8f2;">智渔观察｜今日情报｜趋势雷达｜技术设备｜价格观察｜数据来源｜广告合作</div>
+    <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:14px;">
+      <div class="placeholder" style="background:#123943;color:#dff8f2;">首屏：今日 5 条核心情报 + AI 总结</div>
+      <div class="placeholder" style="background:#0f3e47;color:#dff8f2;">右侧：智能设备/AI 热点雷达</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px;">
+      <div class="placeholder" style="background:#113842;color:#dff8f2;">AI 水产</div>
+      <div class="placeholder" style="background:#113842;color:#dff8f2;">智能设备</div>
+      <div class="placeholder" style="background:#113842;color:#dff8f2;">饲料苗种</div>
+      <div class="placeholder" style="background:#113842;color:#dff8f2;">价格异动</div>
+    </div>
+    <div class="placeholder" style="background:#ffffff;color:#102025;margin-top:12px;">下方浅色阅读区：筛选信息流 + 来源标签 + 广告位</div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">第一版页面</div>
+  <div class="options" data-multiselect>
+    <div class="option" data-choice="home" onclick="toggleSelect(this)">
+      <div class="letter">1</div>
+      <div class="content">
+        <h3>首页</h3>
+        <p>今日精选、趋势雷达、分类入口、价格异动、最新信息流、广告合作入口。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="daily" onclick="toggleSelect(this)">
+      <div class="letter">2</div>
+      <div class="content">
+        <h3>今日情报</h3>
+        <p>每天自动生成一期，包含“今日摘要”和分栏目条目，适合微信/朋友圈传播。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="tech" onclick="toggleSelect(this)">
+      <div class="letter">3</div>
+      <div class="content">
+        <h3>技术设备</h3>
+        <p>AI、水质监测、智能投喂、增氧、尾水处理、养殖模式、饲料苗种、动保。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="price" onclick="toggleSelect(this)">
+      <div class="letter">4</div>
+      <div class="content">
+        <h3>价格观察</h3>
+        <p>关键品种价格与行情文章，只展示有来源的数据，不承诺全市场实时价格。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="sources" onclick="toggleSelect(this)">
+      <div class="letter">5</div>
+      <div class="content">
+        <h3>数据来源</h3>
+        <p>公开列出来源与使用说明，建立可信度，也降低用户对 AI 摘要的误解。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">MVP 后台能力</div>
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>必须有</h4>
+      <ul>
+        <li>来源管理、抓取任务、AI 摘要、分类标签</li>
+        <li>人工审核队列：价格、病害、技术建议、首页推荐</li>
+        <li>文章/情报发布、SEO slug、来源链接</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>先不做</h4>
+      <ul>
+        <li>用户登录、评论、论坛、复杂广告后台</li>
+        <li>企业入驻交易系统、在线支付、会员报告</li>
+        <li>全量价格数据库和绝对实时行情承诺</li>
+      </ul>
+    </div>
+  </div>
+</div>

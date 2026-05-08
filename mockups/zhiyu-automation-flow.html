@@ -1,0 +1,84 @@
+<h2>智渔观察：自动更新与审核机制</h2>
+<p class="subtitle">目标是每天稳定更新，但不牺牲可信度。普通资讯可自动发布，敏感/高影响内容进入人工审核。</p>
+
+<div class="mockup">
+  <div class="mockup-header">每日自动化流程</div>
+  <div class="mockup-body">
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;text-align:center;">
+      <div class="placeholder">1. 来源抓取</div>
+      <div class="placeholder">2. 去重清洗</div>
+      <div class="placeholder">3. AI 分类摘要</div>
+      <div class="placeholder">4. 风险分流</div>
+      <div class="placeholder">5. 发布/审核</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">来源池分层</div>
+  <div class="options" data-multiselect>
+    <div class="option" data-choice="official" onclick="toggleSelect(this)">
+      <div class="letter">A</div>
+      <div class="content">
+        <h3>官方/机构来源</h3>
+        <p>农业农村部、FAO GLOBEFISH、EUMOFA、各地农业农村厅、海关/统计来源。可信度高，适合价格和政策引用。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="media" onclick="toggleSelect(this)">
+      <div class="letter">B</div>
+      <div class="content">
+        <h3>行业媒体/门户</h3>
+        <p>国内水产门户、国际 aquaculture/seafood 媒体。适合新闻、企业动态、技术趋势，但需要去重和来源标注。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="commerce" onclick="toggleSelect(this)">
+      <div class="letter">C</div>
+      <div class="content">
+        <h3>电商/采购平台</h3>
+        <p>设备、饲料、苗种、水产品价格和热销信息。可做“电商观察”，但要避免直接宣称代表全市场。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="research" onclick="toggleSelect(this)">
+      <div class="letter">D</div>
+      <div class="content">
+        <h3>论文/专利/展会</h3>
+        <p>前沿技术、AI、设备研发、病害防控。适合生成“技术观察”，但必须解释成大众能读懂的话。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">发布规则</div>
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>自动发布</h4>
+      <ul>
+        <li>企业新闻、展会、海外动态、一般设备资讯</li>
+        <li>有明确来源且不涉及具体养殖建议的技术新闻</li>
+        <li>AI 摘要标注“由 AI 生成，仅供参考”</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>必须人工审核</h4>
+      <ul>
+        <li>价格行情、病害防控、药品/动保建议</li>
+        <li>首页置顶、专题推荐、商业合作内容</li>
+        <li>来源不稳定或明显带营销倾向的信息</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">每天产出节奏</div>
+  <div class="options">
+    <div class="option" data-choice="mvp-rhythm" onclick="toggleSelect(this)">
+      <div class="letter">✓</div>
+      <div class="content">
+        <h3>MVP 节奏</h3>
+        <p>每天抓取 50-200 条候选，去重后保留 10-30 条入库；首页只推荐 5-8 条；每周沉淀 1 个专题页。</p>
+      </div>
+    </div>
+  </div>
+</div>

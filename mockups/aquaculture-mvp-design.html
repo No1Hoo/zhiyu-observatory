@@ -1,0 +1,90 @@
+<h2>MVP 设计草案：水产产业情报站</h2>
+<p class="subtitle">路线：产业情报型。重点是技术设备、AI、饲料苗种、动保趋势；价格行情作为流量入口和决策辅助。</p>
+
+<div class="split">
+  <div class="mockup">
+    <div class="mockup-header">首页第一屏</div>
+    <div class="mockup-body">
+      <div class="mock-nav">Logo｜今日情报｜技术设备｜价格观察｜AI 水产｜供应商｜数据来源｜广告合作</div>
+      <div class="placeholder">Hero：今天水产行业发生了什么？</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+        <div class="placeholder">技术趋势</div>
+        <div class="placeholder">设备动态</div>
+        <div class="placeholder">价格异动</div>
+      </div>
+      <div class="placeholder">今日 10 条精选情报：AI 摘要 + 来源 + 可信标签</div>
+    </div>
+  </div>
+  <div class="mockup">
+    <div class="mockup-header">内容详情页</div>
+    <div class="mockup-body">
+      <div class="placeholder">标题 + 来源 + 发布时间 + 国家/地区</div>
+      <div class="placeholder">AI 摘要：这件事为什么重要？影响谁？</div>
+      <div class="placeholder">相关品种 / 相关设备 / 相关企业 / 原文链接</div>
+      <div class="placeholder">广告位：相关供应商推荐</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">第一版功能模块</div>
+  <div class="options" data-multiselect>
+    <div class="option" data-choice="daily-intel" onclick="toggleSelect(this)">
+      <div class="letter">1</div>
+      <div class="content">
+        <h3>每日情报</h3>
+        <p>每天自动聚合，按技术、设备、AI、饲料苗种、动保、价格、电商、海外动态分类展示。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="trend-tags" onclick="toggleSelect(this)">
+      <div class="letter">2</div>
+      <div class="content">
+        <h3>趋势标签</h3>
+        <p>比如智能投喂、水质监测、AI 识别、南美白对虾、鲈鱼、虾苗、饲料价格、尾水处理。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="price-watch" onclick="toggleSelect(this)">
+      <div class="letter">3</div>
+      <div class="content">
+        <h3>价格观察</h3>
+        <p>只做关键品种与公开来源，显示来源、日期、地区，避免一开始承诺全量精准报价。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="source-map" onclick="toggleSelect(this)">
+      <div class="letter">4</div>
+      <div class="content">
+        <h3>来源地图</h3>
+        <p>公开列出来源类型：官方、媒体、企业、电商、论文、展会；给每条内容打来源标签。</p>
+      </div>
+    </div>
+    <div class="option" data-choice="ad-slots" onclick="toggleSelect(this)">
+      <div class="letter">5</div>
+      <div class="content">
+        <h3>广告合作位</h3>
+        <p>首页、分类页、详情页预留 Banner 和供应商推荐，不做复杂广告后台，先留招商入口。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="label">内容生产规则</div>
+  <div class="pros-cons">
+    <div class="pros">
+      <h4>自动发布</h4>
+      <ul>
+        <li>普通新闻、企业动态、展会信息、海外资讯</li>
+        <li>AI 自动摘要、翻译、分类、打标签</li>
+        <li>保留原文链接和抓取时间</li>
+      </ul>
+    </div>
+    <div class="cons">
+      <h4>人工审核</h4>
+      <ul>
+        <li>价格行情、病害防控、技术建议</li>
+        <li>带商业推荐或争议的信息</li>
+        <li>首页重点推荐和专题内容</li>
+      </ul>
+    </div>
+  </div>
+</div>
