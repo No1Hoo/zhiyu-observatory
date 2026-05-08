@@ -27,6 +27,7 @@ model Source {
   rawItems          RawItem[]
   intelItems        IntelItem[]
   priceObservations PriceObservation[]
+  ingestionRuns     IngestionRun[]
 }
 
 model RawItem {
@@ -106,4 +107,19 @@ model AdSlot {
   content   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model IngestionRun {
+  id           String    @id @default(cuid())
+  trigger      String
+  status       String    @default("running")
+  sourceId     String?
+  source       Source?   @relation(fields: [sourceId], references: [id])
+  startedAt    DateTime  @default(now())
+  finishedAt   DateTime?
+  itemsSeen    Int       @default(0)
+  itemsCreated Int       @default(0)
+  duplicates   Int       @default(0)
+  riskCount    Int       @default(0)
+  errorMessage String?
 }

@@ -6,8 +6,23 @@ import { fingerprintRawItem } from "./dedupe";
 import { assessRisk } from "./risk";
 import type { IncomingRawItem } from "./types";
 
+export type IngestionResult = {
+  itemsSeen: number;
+  itemsCreated: number;
+  duplicates: number;
+  riskCount: number;
+  intelItems: Awaited<ReturnType<typeof prisma.intelItem.findMany>>;
+};
+
 export async function ingestItems(items: IncomingRawItem[]) {
-  const results = [];
+  const intelItems: IngestionResult["intelItems"] = [];
+  const result: IngestionResult = {
+    itemsSeen: items.length,
+    itemsCreated: 0,
+    duplicates: 0,
+    riskCount: 0,
+    intelItems
+  };
 
   for (const item of items) {
     const fingerprint = fingerprintRawItem(item.sourceId, item.title, item.url);
@@ -26,7 +41,8 @@ export async function ingestItems(items: IncomingRawItem[]) {
 
     const existing = await prisma.intelItem.findUnique({ where: { rawItemId: raw.id } });
     if (existing) {
-      results.push(existing);
+      result.duplicates += 1;
+      intelItems.push(existing);
       continue;
     }
 
@@ -37,6 +53,9 @@ export async function ingestItems(items: IncomingRawItem[]) {
       title: item.title,
       summary: item.summary || ""
     });
+    if (risk.requiresReview || risk.riskLevel >= 3) {
+      result.riskCount += 1;
+    }
 
     const created = await prisma.intelItem.create({
       data: {
@@ -58,8 +77,9 @@ export async function ingestItems(items: IncomingRawItem[]) {
       }
     });
 
-    results.push(created);
+    result.itemsCreated += 1;
+    intelItems.push(created);
   }
 
-  return results;
+  return result;
 }

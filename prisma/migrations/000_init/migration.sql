@@ -101,6 +101,22 @@ CREATE TABLE "AdSlot" (
     "updatedAt" DATETIME NOT NULL
 );
 
+-- CreateTable
+CREATE TABLE "IngestionRun" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "trigger" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'running',
+    "sourceId" TEXT,
+    "startedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "finishedAt" DATETIME,
+    "itemsSeen" INTEGER NOT NULL DEFAULT 0,
+    "itemsCreated" INTEGER NOT NULL DEFAULT 0,
+    "duplicates" INTEGER NOT NULL DEFAULT 0,
+    "riskCount" INTEGER NOT NULL DEFAULT 0,
+    "errorMessage" TEXT,
+    CONSTRAINT "IngestionRun_sourceId_fkey" FOREIGN KEY ("sourceId") REFERENCES "Source" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "RawItem_fingerprint_key" ON "RawItem"("fingerprint");
 
@@ -112,4 +128,3 @@ CREATE UNIQUE INDEX "IntelItem_slug_key" ON "IntelItem"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Topic_slug_key" ON "Topic"("slug");
-
