@@ -17,9 +17,14 @@ railway init
 
 ### 2. 配置
 
-- **Build Command**: `npm run db:generate && npm run db:migrate && npm run db:seed && npm run build`
+仓库已经包含 `railway.json`：
+
+- **Build Command**: `npm run db:generate && npm run build`
 - **Start Command**: `npm run start`
-- **SQLite 路径**: `DATABASE_URL=file:./data/dev.db`
+- **Healthcheck Path**: `/api/health`
+- **SQLite 路径**: `DATABASE_URL=file:/data/zhiyu.db`
+
+`npm run start` 会在服务启动前执行数据库结构检查；如果数据库是空的，会自动 seed 初始内容。
 
 ### 3. 环境变量
 
@@ -27,7 +32,7 @@ railway init
 
 | 变量 | 说明 | 示例 |
 |------|------|------|
-| `DATABASE_URL` | SQLite 持久化路径 | `file:./data/dev.db` |
+| `DATABASE_URL` | SQLite 持久化路径 | `file:/data/zhiyu.db` |
 | `CRON_SECRET` | 定时采集接口密钥 | 随机字符串，≥32位 |
 | `ADMIN_PASSWORD` | Admin 后台密码 | 强密码 |
 | `NEXT_PUBLIC_SITE_URL` | 站点 URL | `https://your-domain.railway.app` |
