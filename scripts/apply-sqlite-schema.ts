@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { DatabaseSync } from "node:sqlite";
+import Database from "better-sqlite3";
 import { resolveSqliteDatabaseDir, resolveSqliteDatabasePath } from "./sqlite-path";
 
 const migrationPath = join(process.cwd(), "prisma", "migrations", "000_init", "migration.sql");
@@ -12,7 +12,7 @@ export function applySqliteSchema(databaseUrl = process.env.DATABASE_URL): strin
   mkdirSync(resolveSqliteDatabaseDir(databaseUrl), { recursive: true });
 
   const sql = readFileSync(migrationPath, "utf8");
-  const db = new DatabaseSync(databasePath);
+  const db = new Database(databasePath);
 
   function tableExists(tableName: string): boolean {
     const row = db
