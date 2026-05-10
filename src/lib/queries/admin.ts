@@ -28,12 +28,43 @@ export async function getReviewQueue() {
   });
 }
 
-export async function getAdminContent() {
-  return prisma.intelItem.findMany({
-    include: { source: true },
-    orderBy: { createdAt: "desc" },
-    take: 100
-  });
+export async function getAdminContent({
+  q = "",
+  status = "",
+  category = "",
+  page = 1,
+  pageSize = 20,
+}: {
+  q?: string;
+  status?: string;
+  category?: string;
+  page?: number;
+  pageSize?: number;
+}) {
+  const where: Record<string, unknown> = {};
+
+  if (q) {
+    where.OR = [
+      { title: { contains: q } },
+      { tags: { contains: q } },
+      { source: { name: { contains: q } } },
+    ];
+  }
+  if (status) where.status = status;
+  if (category) where.category = category;
+
+  const [items, total] = await Promise.all([
+    prisma.intelItem.findMany({
+      where,
+      include: { source: true },
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    }),
+    prisma.intelItem.count({ where }),
+  ]);
+
+  return { items, total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
 }
 
 export async function getTopicsAndAds() {

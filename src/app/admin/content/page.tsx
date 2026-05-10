@@ -1,20 +1,25 @@
 import { getAdminContent } from "@/lib/queries/admin";
+import ContentClient from "./ContentClient";
 
-export default async function AdminContentPage() {
-  const items = await getAdminContent();
+export default async function AdminContentPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; status?: string; category?: string; page?: string }>;
+}) {
+  const { q = "", status = "", category = "", page: pageStr = "1" } = await searchParams;
+  const page = Math.max(1, parseInt(pageStr, 10));
+
+  const { items, total, totalPages } = await getAdminContent({ q, status, category, page });
+
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-ink">Content</h1>
-      <div className="mt-6 overflow-hidden rounded-lg border border-slate-200 bg-white">
-        {items.map((item) => (
-          <div key={item.id} className="border-t border-slate-100 p-4 first:border-t-0">
-            <p className="font-medium text-ink">{item.title}</p>
-            <p className="text-sm text-slate-500">
-              {item.status} · {item.source.name}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
+    <ContentClient
+      items={items}
+      total={total}
+      page={page}
+      totalPages={totalPages}
+      q={q}
+      status={status}
+      category={category}
+    />
   );
 }

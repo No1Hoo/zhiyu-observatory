@@ -4,7 +4,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db";
 import { runOfficialWebIngestion, runSampleIngestion } from "@/lib/ingestion/runs";
 
-export async function publishIntelItem(id: string) {
+export async function publishItem(id: string) {
   await prisma.intelItem.update({
     where: { id },
     data: {
@@ -14,14 +14,30 @@ export async function publishIntelItem(id: string) {
   });
   revalidatePath("/");
   revalidatePath("/admin/review");
+  revalidatePath("/admin/content");
 }
 
-export async function rejectIntelItem(id: string) {
+export async function rejectItem(id: string) {
   await prisma.intelItem.update({
     where: { id },
     data: { status: "REJECTED" }
   });
   revalidatePath("/admin/review");
+  revalidatePath("/admin/content");
+}
+
+export async function deleteItem(id: string) {
+  await prisma.intelItem.delete({ where: { id } });
+  revalidatePath("/admin/content");
+  revalidatePath("/");
+}
+
+export async function publishIntelItem(id: string) {
+  await publishItem(id);
+}
+
+export async function rejectIntelItem(id: string) {
+  await rejectItem(id);
 }
 
 export async function featureIntelItem(id: string) {
@@ -57,4 +73,72 @@ function revalidateIngestionViews() {
   revalidatePath("/admin");
   revalidatePath("/admin/ingestion");
   revalidatePath("/admin/review");
+}
+
+export async function createTopic(data: {
+  name: string;
+  slug: string;
+  description: string;
+  tags: string;
+  sponsored?: boolean;
+}) {
+  await prisma.topic.create({ data: { ...data, sponsored: data.sponsored ?? false } });
+  revalidatePath("/admin/topics-ads");
+}
+
+export async function updateTopic(id: string, data: {
+  name?: string;
+  slug?: string;
+  description?: string;
+  tags?: string;
+  sponsored?: boolean;
+}) {
+  await prisma.topic.update({ where: { id }, data });
+  revalidatePath("/admin/topics-ads");
+}
+
+export async function deleteTopic(id: string) {
+  await prisma.topic.delete({ where: { id } });
+  revalidatePath("/admin/topics-ads");
+}
+
+export async function createAdSlot(data: {
+  name: string;
+  page: string;
+  position: string;
+  sizeHint?: string;
+  enabled?: boolean;
+  label?: string;
+  content?: string;
+}) {
+  await prisma.adSlot.create({
+    data: {
+      name: data.name,
+      page: data.page,
+      position: data.position,
+      sizeHint: data.sizeHint ?? "responsive",
+      enabled: data.enabled ?? true,
+      label: data.label ?? "广告合作",
+      content: data.content,
+    }
+  });
+  revalidatePath("/admin/topics-ads");
+}
+
+export async function updateAdSlot(id: string, data: {
+  name?: string;
+  page?: string;
+  position?: string;
+  sizeHint?: string;
+  enabled?: boolean;
+  label?: string;
+  content?: string;
+}) {
+  await prisma.adSlot.update({ where: { id }, data });
+  revalidatePath("/admin/topics-ads");
+}
+
+export async function deleteAdSlot(id: string) {
+  await prisma.adSlot.delete({ where: { id } });
+  revalidatePath("/admin/topics-ads");
 }

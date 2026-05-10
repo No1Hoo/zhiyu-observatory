@@ -20,28 +20,13 @@ export function ReviewQueue({ items }: { items: Item[] }) {
           <h2 className="mt-3 text-xl font-semibold text-ink">{item.title}</h2>
           <p className="mt-3 whitespace-pre-line text-sm leading-6 text-slate-600">{item.aiSummary}</p>
           <div className="mt-5 flex flex-wrap gap-2">
-            <form
-              action={async () => {
-                "use server";
-                await publishIntelItem(item.id);
-              }}
-            >
+            <form action={async () => { await publishIntelItem(item.id); }}>
               <button className="rounded-md bg-lagoon px-3 py-2 text-sm text-white">发布</button>
             </form>
-            <form
-              action={async () => {
-                "use server";
-                await featureIntelItem(item.id);
-              }}
-            >
-              <button className="rounded-md bg-obsidian px-3 py-2 text-sm text-white">设为首页推荐</button>
+            <form action={async () => { await featureIntelItem(item.id); }}>
+              <button className="rounded-md bg-obsidian px-3 py-2 text-sm text-white">首页推荐</button>
             </form>
-            <form
-              action={async () => {
-                "use server";
-                await rejectIntelItem(item.id);
-              }}
-            >
+            <form action={async () => { await rejectIntelItem(item.id); }}>
               <button className="rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-700">忽略</button>
             </form>
           </div>
