@@ -16,6 +16,7 @@ model Source {
   crawlMethod       String
   crawlFrequency    String
   crawlLimit        Int                @default(20)
+  rssUrl            String?
   trustLevel        Int                @default(3)
   enabled           Boolean            @default(true)
   defaultReview     String             @default("PENDING_REVIEW")

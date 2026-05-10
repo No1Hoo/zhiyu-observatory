@@ -4,6 +4,7 @@ import { AI_DISCLOSURE } from "@/lib/constants";
 import { classifyItem } from "./classify";
 import { fingerprintRawItem } from "./dedupe";
 import { assessRisk } from "./risk";
+import { generateAiSummary } from "@/lib/ai/summarize";
 import type { IncomingRawItem } from "./types";
 
 export type IngestionResult = {
@@ -47,11 +48,14 @@ export async function ingestItems(items: IncomingRawItem[]) {
     }
 
     const classification = classifyItem(item.title, item.summary);
-    const aiSummary = `${item.summary || item.title}\n\n${AI_DISCLOSURE}`;
+
+    // Try AI summary if API key is configured
+    const aiSummary = await buildSummary(item, classification);
+
     const risk = assessRisk({
       category: classification.category,
       title: item.title,
-      summary: item.summary || ""
+      summary: aiSummary
     });
     if (risk.requiresReview || risk.riskLevel >= 3) {
       result.riskCount += 1;
@@ -82,4 +86,25 @@ export async function ingestItems(items: IncomingRawItem[]) {
   }
 
   return result;
+}
+
+async function buildSummary(
+  item: IncomingRawItem,
+  classification: Awaited<ReturnType<typeof classifyItem>>
+): Promise<string> {
+  const aiResult = await generateAiSummary({
+    title: item.title,
+    url: item.url,
+    originalSummary: item.summary,
+    category: classification.category,
+    region: classification.region ?? undefined,
+  });
+
+  if (aiResult.ok) {
+    return `${aiResult.summary}\n\n${AI_DISCLOSURE}`;
+  }
+
+  // Fallback to original summary + disclosure
+  const fallback = item.summary || item.title;
+  return `${fallback}\n\n${AI_DISCLOSURE}`;
 }
