@@ -6,6 +6,8 @@ import { SiteHeader } from "@/components/public/SiteHeader";
 import { TrendRadar } from "@/components/public/TrendRadar";
 import { getHomeData } from "@/lib/queries/public";
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const data = await getHomeData();
 

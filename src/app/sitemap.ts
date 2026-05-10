@@ -3,6 +3,8 @@ import { getAllPublishedSlugs } from "@/lib/queries/public";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://zhiyu-observatory.example.com";
 
+export const dynamic = "force-dynamic";
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const slugs = await getAllPublishedSlugs();
 

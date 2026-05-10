@@ -4,6 +4,8 @@ import { IntelCard } from "@/components/public/IntelCard";
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { getTopicBySlug, getIntelByTag } from "@/lib/queries/public";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

@@ -1,7 +1,7 @@
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { getSources } from "@/lib/queries/public";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function SourcesPage() {
   const sources = await getSources();

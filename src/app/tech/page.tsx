@@ -2,6 +2,8 @@ import { IntelCard } from "@/components/public/IntelCard";
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { getPublishedIntelByCategory } from "@/lib/queries/public";
 
+export const dynamic = "force-dynamic";
+
 const CATEGORIES = [
   { value: "AI_AQUACULTURE",  label: "AI 识别" },
   { value: "SMART_EQUIPMENT", label: "智能投喂" },

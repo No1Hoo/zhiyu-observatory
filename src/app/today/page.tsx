@@ -2,7 +2,7 @@ import { IntelCard } from "@/components/public/IntelCard";
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { getPublishedIntelByCategory } from "@/lib/queries/public";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 const CATEGORY_LABELS: Record<string, string> = {
   AI_AQUACULTURE:  "AI 识别",

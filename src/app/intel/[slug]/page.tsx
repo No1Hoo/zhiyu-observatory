@@ -7,6 +7,8 @@ import { AI_DISCLOSURE } from "@/lib/constants";
 import { formatDate, splitTags } from "@/lib/format";
 import { getIntelBySlug } from "@/lib/queries/public";
 
+export const dynamic = "force-dynamic";
+
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://zhiyu-observatory.example.com";
 
 const CATEGORY_LABELS: Record<string, string> = {
