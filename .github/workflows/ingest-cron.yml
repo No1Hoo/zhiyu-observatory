@@ -15,7 +15,20 @@ jobs:
           node-version: "22"
           cache: "npm"
       - run: npm ci
+      - name: Check cron secrets
+        id: cron-secrets
+        run: |
+          if [ -z "$ZHIYU_INGEST_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "::notice::Skipping ingestion cron because ZHIYU_INGEST_URL or CRON_SECRET is not configured."
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          ZHIYU_INGEST_URL: ${{ secrets.ZHIYU_INGEST_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
       - run: npx tsx scripts/call-cron-ingest.ts
+        if: steps.cron-secrets.outputs.configured == 'true'
         env:
           ZHIYU_INGEST_URL: ${{ secrets.ZHIYU_INGEST_URL }}
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
