@@ -6,7 +6,9 @@ describe("createSlug", () => {
     expect(createSlug("AI Aquaculture Watch 2026")).toBe("ai-aquaculture-watch-2026");
   });
 
-  it("falls back to a stable hash for Chinese text", () => {
-    expect(createSlug("智能投喂设备观察")).toMatch(/^item-[a-f0-9]{8}$/);
+  it("creates readable pinyin slugs for Chinese text", () => {
+    const slug = createSlug("智能投喂设备观察");
+    expect(slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/);
+    expect(slug.length).toBeLessThanOrEqual(80);
   });
 });

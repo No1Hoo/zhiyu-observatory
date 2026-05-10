@@ -63,3 +63,13 @@ export async function getAllPublishedSlugs() {
     select: { slug: true }
   });
 }
+
+export async function getTopCategories() {
+  return prisma.intelItem.groupBy({
+    by: ["category"],
+    where: { status: "PUBLISHED" },
+    _count: { category: true },
+    orderBy: { _count: { category: "desc" } },
+    take: 4
+  });
+}
