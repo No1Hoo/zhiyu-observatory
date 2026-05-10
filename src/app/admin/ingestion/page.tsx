@@ -4,6 +4,8 @@ import { MetricCard } from "@/components/admin/MetricCard";
 import { SourceHealthTable } from "@/components/admin/SourceHealthTable";
 import { getAdminIngestionDashboard } from "@/lib/queries/admin";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminIngestionPage() {
   const data = await getAdminIngestionDashboard();
 

@@ -1,6 +1,8 @@
 import { MetricCard } from "@/components/admin/MetricCard";
 import { getAdminDashboard } from "@/lib/queries/admin";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminPage() {
   const data = await getAdminDashboard();
 

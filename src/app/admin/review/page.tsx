@@ -1,6 +1,8 @@
 import { ReviewQueue } from "@/components/admin/ReviewQueue";
 import { getReviewQueue } from "@/lib/queries/admin";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminReviewPage() {
   const items = await getReviewQueue();
   return (

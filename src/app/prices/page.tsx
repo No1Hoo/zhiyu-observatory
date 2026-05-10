@@ -2,6 +2,8 @@ import { PriceTicker } from "@/components/public/PriceTicker";
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { getPriceObservations } from "@/lib/queries/public";
 
+export const revalidate = 3600;
+
 export default async function PricesPage() {
   const prices = await getPriceObservations();
 

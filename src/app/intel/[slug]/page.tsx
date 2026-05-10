@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { Metadata } from "next";
 import { AdSlotBox } from "@/components/public/AdSlotBox";
 import { SiteHeader } from "@/components/public/SiteHeader";
@@ -7,6 +8,17 @@ import { formatDate, splitTags } from "@/lib/format";
 import { getIntelBySlug } from "@/lib/queries/public";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://zhiyu-observatory.example.com";
+
+const CATEGORY_LABELS: Record<string, string> = {
+  AI_AQUACULTURE:  "AI 识别",
+  SMART_EQUIPMENT: "智能投喂",
+  FEED_SEEDLING:   "饲料苗种",
+  ANIMAL_HEALTH:   "动物保健",
+  PRICE_MARKET:    "价格行情",
+  ECOMMERCE:       "电商渠道",
+  OVERSEAS:        "海外市场",
+  POLICY:          "政策动向",
+};
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -43,6 +55,9 @@ export default async function IntelDetailPage({ params }: { params: Promise<{ sl
     url: `${BASE_URL}/intel/${slug}`,
   };
 
+  const categoryLabel = CATEGORY_LABELS[item.category] ?? item.category;
+  const categoryHref = `/tech?category=${item.category}`;
+
   return (
     <main>
       <script
@@ -52,6 +67,15 @@ export default async function IntelDetailPage({ params }: { params: Promise<{ sl
       <SiteHeader />
       <article className="mx-auto grid max-w-6xl gap-8 px-5 py-10 lg:grid-cols-[1fr_320px]">
         <div className="rounded-lg bg-white p-6 shadow-sm">
+          {/* Breadcrumb */}
+          <nav className="mb-4 flex flex-wrap items-center gap-1 text-sm text-slate-500">
+            <Link href="/" className="hover:text-lagoon">首页</Link>
+            <span>/</span>
+            <Link href="/tech" className="hover:text-lagoon">技术设备</Link>
+            <span>/</span>
+            <Link href={categoryHref} className="hover:text-lagoon">{categoryLabel}</Link>
+          </nav>
+
           <div className="flex flex-wrap gap-2 text-xs">
             {splitTags(item.tags).map((tag) => (
               <span key={tag} className="rounded-full bg-cyan-50 px-2 py-1 text-lagoon">
@@ -63,7 +87,7 @@ export default async function IntelDetailPage({ params }: { params: Promise<{ sl
           <div className="mt-4 flex flex-wrap gap-3 text-sm text-slate-500">
             <span>{item.source.name}</span>
             <span>{formatDate(item.sourcePublishedAt || item.publishedAt)}</span>
-            <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="text-lagoon">
+            <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="text-lagoon hover:underline">
               查看原文
             </a>
           </div>

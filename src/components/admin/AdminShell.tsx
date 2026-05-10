@@ -6,7 +6,8 @@ const adminNav = [
   { label: "Ingestion", href: "/admin/ingestion" },
   { label: "Review Queue", href: "/admin/review" },
   { label: "Content", href: "/admin/content" },
-  { label: "Topics/Ads", href: "/admin/topics-ads" }
+  { label: "Topics/Ads", href: "/admin/topics-ads" },
+  { label: "Inquiries", href: "/admin/inquiries" },
 ];
 
 export function AdminShell({ children }: { children: React.ReactNode }) {

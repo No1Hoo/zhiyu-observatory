@@ -109,3 +109,17 @@ export async function getAdminIngestionDashboard() {
     sources
   };
 }
+
+export async function getInquiries() {
+  return prisma.inquiry.findMany({
+    orderBy: { createdAt: "desc" },
+    take: 100
+  });
+}
+
+export async function updateInquiryStatus(id: string, status: string) {
+  return prisma.inquiry.update({
+    where: { id },
+    data: { status }
+  });
+}

@@ -142,3 +142,26 @@ export async function deleteAdSlot(id: string) {
   await prisma.adSlot.delete({ where: { id } });
   revalidatePath("/admin/topics-ads");
 }
+
+export async function submitInquiry(data: {
+  company: string;
+  contact: string;
+  phone: string;
+  email: string;
+  type: string;
+  message?: string;
+  budget?: string;
+}) {
+  await prisma.inquiry.create({
+    data: {
+      company: data.company,
+      contact: data.contact,
+      phone: data.phone,
+      email: data.email,
+      type: data.type,
+      message: data.message,
+      budget: data.budget,
+    }
+  });
+  revalidatePath("/admin/inquiries");
+}

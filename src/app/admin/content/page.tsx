@@ -1,6 +1,8 @@
 import { getAdminContent } from "@/lib/queries/admin";
 import ContentClient from "./ContentClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminContentPage({
   searchParams,
 }: {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { IntelItem, Source } from "@prisma/client";
-import { formatDate, splitTags } from "@/lib/format";
+import { formatRelativeDate, splitTags } from "@/lib/format";
 
 type Props = {
   item: IntelItem & { source: Source };
@@ -19,12 +19,12 @@ export function IntelCard({ item }: Props) {
           ))}
       </div>
       <h3 className="text-lg font-semibold leading-7 text-ink">
-        <Link href={`/intel/${item.slug}`}>{item.title}</Link>
+        <Link href={`/intel/${item.slug}`} className="hover:text-lagoon">{item.title}</Link>
       </h3>
       <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-600">{item.aiSummary}</p>
       <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-slate-500">
         <span>{item.source.name}</span>
-        <span>{formatDate(item.publishedAt || item.createdAt)}</span>
+        <span>{formatRelativeDate(item.publishedAt || item.createdAt)}</span>
         <span>可信等级 {item.source.trustLevel}/5</span>
       </div>
     </article>

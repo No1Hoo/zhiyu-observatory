@@ -73,3 +73,25 @@ export async function getTopCategories() {
     take: 4
   });
 }
+
+export async function getIntelByTag(tag: string) {
+  return prisma.intelItem.findMany({
+    where: {
+      status: "PUBLISHED",
+      tags: { contains: tag }
+    },
+    include: { source: true },
+    orderBy: { publishedAt: "desc" },
+    take: 50
+  });
+}
+
+export async function getTopicBySlug(slug: string) {
+  return prisma.topic.findUnique({ where: { slug } });
+}
+
+export async function getTopics() {
+  return prisma.topic.findMany({
+    orderBy: { createdAt: "desc" }
+  });
+}

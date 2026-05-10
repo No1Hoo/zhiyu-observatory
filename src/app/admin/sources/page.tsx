@@ -1,6 +1,8 @@
 import { SourceTable } from "@/components/admin/SourceTable";
 import { getAdminSources } from "@/lib/queries/admin";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminSourcesPage() {
   const sources = await getAdminSources();
   return (

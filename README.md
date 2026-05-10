@@ -4,32 +4,30 @@
 
 ## 功能
 
-- 科技观察台风格首页
-- 今日情报、技术设备、价格观察、数据来源、广告合作页面
-- 信息详情页，保留来源和 AI 摘要说明
-- 管理后台 Dashboard
-- 来源管理
-- 审核工作台
-- 内容、专题、广告位管理
-- 采集运行记录、来源健康和样本 ingestion 管线
-- 受保护的定时采集 API
+- 科技观察台风格首页，含趋势雷达（动态分类统计）
+- 今日情报（按分类分组）、技术设备（分类筛选）、价格观察、数据来源、专题页
+- 信息详情页（面包屑导航、相对时间、JSON-LD Article schema）
+- 管理后台：Dashboard / Sources / Ingestion / Review Queue / Content（筛选+分页+批量）/ Topics+Ads（CRUD模态框）/ Inquiries（合作意向）
+- 受保护的定时采集 API（HMAC-SHA256 Cookie 认证）
+- MiniMax AI 摘要（可选配置，20s 超时 graceful fallback）
+- RSS feed 采集（rss-parser）+ 传统网页采集（regex anchor）
+- 合作意向表单（Inquiry model）+ 广告位管理（AdSlot model）
 
 ## 本地运行
 
 ```bash
 npm install
 cp .env.example .env
-npm run db:generate
-npm run db:migrate
-npm run db:seed
+# 编辑 .env，设置 ADMIN_PASSWORD, CRON_SECRET 等
+npx prisma generate
+npx prisma db push        # 创建/同步数据库 schema
+npm run db:seed           # 填充示例数据（27条 intel + 价格/专题/广告位）
 npm run dev
 ```
 
 打开：
-
 - Public site: http://localhost:3000
-- Admin: http://localhost:3000/admin
-- Ingestion workbench: http://localhost:3000/admin/ingestion
+- Admin: http://localhost:3000/admin（默认无密码，配置 ADMIN_PASSWORD 后生效）
 
 ## 采集
 

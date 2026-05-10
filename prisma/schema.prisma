@@ -124,3 +124,16 @@ model IngestionRun {
   riskCount    Int       @default(0)
   errorMessage String?
 }
+
+model Inquiry {
+  id         String   @id @default(cuid())
+  company    String
+  contact    String
+  phone      String
+  email      String
+  type       String   @default("ADVERTISING")
+  message    String?
+  budget     String?
+  status     String   @default("NEW")
+  createdAt  DateTime @default(now())
+}
