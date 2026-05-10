@@ -56,3 +56,10 @@ export async function getPriceObservations() {
     take: 50
   });
 }
+
+export async function getAllPublishedSlugs() {
+  return prisma.intelItem.findMany({
+    where: { status: "PUBLISHED" },
+    select: { slug: true }
+  });
+}

@@ -8,5 +8,6 @@ export const NAV_ITEMS = [
   { label: "技术设备", href: "/tech" },
   { label: "价格观察", href: "/prices" },
   { label: "数据来源", href: "/sources" },
+  { label: "关于我们", href: "/about" },
   { label: "广告合作", href: "/advertise" }
 ];

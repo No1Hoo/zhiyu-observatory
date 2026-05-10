@@ -1,17 +1,54 @@
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 import { AdSlotBox } from "@/components/public/AdSlotBox";
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { AI_DISCLOSURE } from "@/lib/constants";
 import { formatDate, splitTags } from "@/lib/format";
 import { getIntelBySlug } from "@/lib/queries/public";
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://zhiyu-observatory.example.com";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const item = await getIntelBySlug(slug);
+  if (!item) return { title: "未找到" };
+  return {
+    title: item.title,
+    description: item.editorSummary || item.aiSummary,
+    openGraph: {
+      title: item.title,
+      description: item.editorSummary || item.aiSummary,
+      type: "article",
+      publishedTime: (item.sourcePublishedAt || item.publishedAt)?.toISOString(),
+      authors: [item.source.name],
+      images: [{ url: `${BASE_URL}/og-default.jpg`, width: 1200, height: 630 }],
+    },
+  };
+}
+
 export default async function IntelDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const item = await getIntelBySlug(slug);
   if (!item) notFound();
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: item.title,
+    description: item.editorSummary || item.aiSummary,
+    author: { "@type": "Organization", name: item.source.name },
+    publisher: { "@type": "Organization", name: "智渔观察", url: BASE_URL },
+    datePublished: (item.sourcePublishedAt || item.publishedAt)?.toISOString(),
+    dateModified: item.updatedAt.toISOString(),
+    url: `${BASE_URL}/intel/${slug}`,
+  };
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <SiteHeader />
       <article className="mx-auto grid max-w-6xl gap-8 px-5 py-10 lg:grid-cols-[1fr_320px]">
         <div className="rounded-lg bg-white p-6 shadow-sm">
