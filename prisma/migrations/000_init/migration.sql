@@ -8,6 +8,7 @@ CREATE TABLE "Source" (
     "crawlMethod" TEXT NOT NULL,
     "crawlFrequency" TEXT NOT NULL,
     "crawlLimit" INTEGER NOT NULL DEFAULT 20,
+    "rssUrl" TEXT,
     "trustLevel" INTEGER NOT NULL DEFAULT 3,
     "enabled" BOOLEAN NOT NULL DEFAULT true,
     "defaultReview" TEXT NOT NULL DEFAULT 'PENDING_REVIEW',
@@ -115,6 +116,20 @@ CREATE TABLE "IngestionRun" (
     "riskCount" INTEGER NOT NULL DEFAULT 0,
     "errorMessage" TEXT,
     CONSTRAINT "IngestionRun_sourceId_fkey" FOREIGN KEY ("sourceId") REFERENCES "Source" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Inquiry" (
+    "id" TEXT NOT NULL PRIMARY KEY,
+    "company" TEXT NOT NULL,
+    "contact" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "type" TEXT NOT NULL DEFAULT 'ADVERTISING',
+    "message" TEXT,
+    "budget" TEXT,
+    "status" TEXT NOT NULL DEFAULT 'NEW',
+    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateIndex
