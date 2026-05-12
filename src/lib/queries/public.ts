@@ -1,8 +1,22 @@
 import { prisma } from "@/lib/db";
 import { ensureDemoData } from "@/lib/demo-data";
 
+let publicDataReady = false;
+let publicDataPromise: Promise<void> | null = null;
+
 async function ensurePublicData() {
-  await ensureDemoData(prisma);
+  if (publicDataReady) return;
+  if (!publicDataPromise) {
+    publicDataPromise = ensureDemoData(prisma)
+      .then(() => {
+        publicDataReady = true;
+      })
+      .catch((error) => {
+        publicDataPromise = null;
+        throw error;
+      });
+  }
+  await publicDataPromise;
 }
 
 export async function getHomeData() {
