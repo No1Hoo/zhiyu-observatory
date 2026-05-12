@@ -12,17 +12,20 @@ export default async function HomePage() {
   const data = await getHomeData();
 
   return (
-    <main>
+    <main className="min-h-screen text-foam">
       <SiteHeader />
       <HeroObservatory featured={data.featured} />
       <TrendRadar />
-      <section className="mx-auto grid max-w-7xl gap-6 px-5 py-10 lg:grid-cols-[1fr_340px]">
+      <section className="mx-auto grid max-w-7xl gap-6 px-5 py-12 lg:grid-cols-[1fr_360px]">
         <div>
-          <div className="mb-5 flex items-end justify-between">
+          <div className="mb-7 flex items-end justify-between gap-4">
             <div>
-              <p className="text-sm font-semibold text-lagoon">最新入库</p>
-              <h2 className="text-2xl font-bold text-ink">每日产业情报</h2>
+              <p className="signal-label">Latest Intelligence</p>
+              <h2 className="mt-2 text-4xl font-black tracking-[-0.055em] text-foam md:text-6xl">每日产业情报</h2>
             </div>
+            <p className="hidden max-w-sm text-right text-sm leading-6 text-foam/45 md:block">
+              经过来源标注与审核流处理的行业信息流，适合快速判断方向与变化。
+            </p>
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {data.latest.map((item) => (
@@ -30,7 +33,7 @@ export default async function HomePage() {
             ))}
           </div>
         </div>
-        <div className="space-y-5">
+        <div className="space-y-5 lg:sticky lg:top-24 lg:self-start">
           <PriceTicker prices={data.prices} />
           <AdSlotBox slot={data.adSlots[0]} />
         </div>
