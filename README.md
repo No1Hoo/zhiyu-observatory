@@ -13,6 +13,26 @@
 - RSS feed 采集（rss-parser）+ 传统网页采集（regex anchor）
 - 合作意向表单（Inquiry model）+ 广告位管理（AdSlot model）
 
+## Vercel 快速部署
+
+本仓库已经加入 `vercel.json`，可以直接导入 Vercel：
+
+1. 打开 Vercel
+2. Add New Project
+3. Import `No1Hoo/zhiyu-observatory`
+4. Framework Preset 选择 `Next.js`
+5. Build Command 使用默认读取 `vercel.json`：`npm run db:generate && next build`
+6. 直接 Deploy
+
+`vercel.json` 默认环境变量：
+
+```text
+DATABASE_URL=file:/tmp/zhiyu-observatory.db
+NEXT_PUBLIC_SITE_URL=https://zhiyu-observatory.vercel.app
+```
+
+注意：这个配置适合快速公网预览。由于 Vercel Serverless 的 `/tmp` 文件系统不是长期持久化数据库，完整生产环境建议后续迁移到 Vercel Postgres / Neon / Supabase Postgres，并把 Prisma datasource 从 SQLite 改为 PostgreSQL。
+
 ## 本地运行
 
 ```bash
@@ -20,8 +40,8 @@ npm install
 cp .env.example .env
 # 编辑 .env，设置 ADMIN_PASSWORD, CRON_SECRET 等
 npx prisma generate
-npx prisma db push        # 创建/同步数据库 schema
-npm run db:seed           # 填充示例数据（27条 intel + 价格/专题/广告位）
+npm run db:migrate
+npm run db:seed
 npm run dev
 ```
 
