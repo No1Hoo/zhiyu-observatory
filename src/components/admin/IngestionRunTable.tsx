@@ -9,11 +9,17 @@ const statusLabel: Record<string, string> = {
   failed: "失败"
 };
 
+function badge(status: string) {
+  if (status === "success") return "border-aqua/25 bg-aqua/10 text-aqua";
+  if (status === "failed") return "border-rose-300/25 bg-rose-300/10 text-rose-200";
+  return "border-amber-300/25 bg-amber-300/10 text-amber-200";
+}
+
 export function IngestionRunTable({ runs }: { runs: RunWithSource[] }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200 bg-white">
-      <table className="w-full min-w-[820px] text-left text-sm">
-        <thead className="bg-slate-50 text-slate-600">
+    <div className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/[0.045] shadow-[0_24px_80px_rgba(0,0,0,.22)] backdrop-blur-xl">
+      <table className="w-full min-w-[860px] text-left text-sm">
+        <thead className="border-b border-white/10 bg-white/[0.045] text-xs uppercase tracking-[0.16em] text-foam/42">
           <tr>
             <th className="p-4">开始时间</th>
             <th className="p-4">触发</th>
@@ -28,20 +34,20 @@ export function IngestionRunTable({ runs }: { runs: RunWithSource[] }) {
         </thead>
         <tbody>
           {runs.map((run) => (
-            <tr key={run.id} className="border-t border-slate-100">
-              <td className="p-4 text-slate-700">{formatDate(run.startedAt)}</td>
-              <td className="p-4 text-slate-700">{run.trigger}</td>
-              <td className="p-4 font-medium text-ink">{run.source?.name ?? "未绑定来源"}</td>
+            <tr key={run.id} className="border-t border-white/10 text-foam/62 transition hover:bg-aqua/5">
+              <td className="p-4">{formatDate(run.startedAt)}</td>
+              <td className="p-4">{run.trigger}</td>
+              <td className="p-4 font-bold text-foam">{run.source?.name ?? "未绑定来源"}</td>
               <td className="p-4">
-                <span className="rounded-full bg-slate-100 px-2 py-1 text-xs text-slate-700">
+                <span className={`rounded-full border px-3 py-1 text-xs font-bold ${badge(run.status)}`}>
                   {statusLabel[run.status] ?? run.status}
                 </span>
               </td>
               <td className="p-4">{run.itemsSeen}</td>
-              <td className="p-4">{run.itemsCreated}</td>
+              <td className="p-4 text-aqua">{run.itemsCreated}</td>
               <td className="p-4">{run.duplicates}</td>
-              <td className="p-4">{run.riskCount}</td>
-              <td className="max-w-64 p-4 text-xs text-rose-700">{run.errorMessage ?? "—"}</td>
+              <td className="p-4 text-amber-200">{run.riskCount}</td>
+              <td className="max-w-64 p-4 text-xs text-rose-200/80">{run.errorMessage ?? "—"}</td>
             </tr>
           ))}
         </tbody>
