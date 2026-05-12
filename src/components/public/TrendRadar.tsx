@@ -25,52 +25,47 @@ const STATS_MAP: Record<string, string> = {
 
 export async function TrendRadar() {
   const categories = await getTopCategories();
-
   const trends = categories.map((c) => ({
     category: c.category,
     label: CATEGORY_META[c.category]?.label ?? c.category,
     value: STATS_MAP[c.category] ?? "内容丰富",
   }));
 
-  // Fallback if DB is empty
-  if (trends.length === 0) {
-    const staticFallback = [
-      { label: "AI 识别",    value: "热度上升", icon: Cpu },
-      { label: "智能投喂",   value: "设备关注", icon: RadioTower },
-      { label: "水质监测",   value: "应用扩散", icon: Droplets },
-      { label: "价格观察",   value: "样本追踪", icon: Fish },
-    ];
-    return (
-      <section id="radar" className="bg-obsidian px-5 pb-12 text-foam">
-        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4">
-          {staticFallback.map((trend) => {
-            const Icon = trend.icon;
+  const items = trends.length > 0 ? trends : [
+    { category: "AI_AQUACULTURE", label: "AI 识别", value: "热度上升" },
+    { category: "SMART_EQUIPMENT", label: "智能投喂", value: "设备关注" },
+    { category: "ANIMAL_HEALTH", label: "水质监测", value: "应用扩散" },
+    { category: "PRICE_MARKET", label: "价格观察", value: "样本追踪" },
+  ];
+
+  return (
+    <section id="radar" className="px-5 pb-12 text-foam">
+      <div className="mx-auto max-w-7xl">
+        <div className="mb-5 flex items-end justify-between gap-4">
+          <div>
+            <p className="signal-label">Trend Radar</p>
+            <h2 className="mt-2 text-3xl font-black tracking-[-0.04em] text-foam md:text-5xl">产业信号雷达</h2>
+          </div>
+          <p className="hidden max-w-md text-right text-sm leading-6 text-foam/48 md:block">将公开来源中的技术、设备、价格和政策动态压缩成可浏览的信号层。</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-4">
+          {items.map((trend, index) => {
+            const Icon = CATEGORY_META[trend.category]?.icon ?? Cpu;
             return (
-              <div key={trend.label} className="rounded-lg border border-aqua/15 bg-white/7 p-5">
-                <Icon className="h-6 w-6 text-aqua" />
-                <h3 className="mt-4 text-lg font-semibold">{trend.label}</h3>
-                <p className="mt-2 text-sm text-foam/70">{trend.value}</p>
+              <div key={trend.category} className="group premium-card relative overflow-hidden rounded-[1.7rem] p-5 transition hover:-translate-y-1 hover:border-aqua/35">
+                <div className="absolute right-4 top-3 text-5xl font-black tracking-[-0.08em] text-white/[0.035]">0{index + 1}</div>
+                <div className="grid h-11 w-11 place-items-center rounded-2xl border border-aqua/25 bg-aqua/10">
+                  <Icon className="h-5 w-5 text-aqua" />
+                </div>
+                <h3 className="mt-8 text-xl font-black tracking-[-0.03em] text-foam group-hover:text-aqua">{trend.label}</h3>
+                <p className="mt-2 text-sm text-foam/55">{trend.value}</p>
+                <div className="mt-6 h-1 overflow-hidden rounded-full bg-white/10">
+                  <div className="h-full rounded-full bg-aqua/70" style={{ width: `${55 + index * 9}%` }} />
+                </div>
               </div>
             );
           })}
         </div>
-      </section>
-    );
-  }
-
-  return (
-    <section id="radar" className="bg-obsidian px-5 pb-12 text-foam">
-      <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4">
-        {trends.map((trend) => {
-          const Icon = CATEGORY_META[trend.category]?.icon ?? Cpu;
-          return (
-            <div key={trend.category} className="rounded-lg border border-aqua/15 bg-white/7 p-5">
-              <Icon className="h-6 w-6 text-aqua" />
-              <h3 className="mt-4 text-lg font-semibold">{trend.label}</h3>
-              <p className="mt-2 text-sm text-foam/70">{trend.value}</p>
-            </div>
-          );
-        })}
       </div>
     </section>
   );
