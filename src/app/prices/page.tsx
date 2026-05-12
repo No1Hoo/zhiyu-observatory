@@ -8,14 +8,15 @@ export default async function PricesPage() {
   const prices = await getPriceObservations();
 
   return (
-    <main>
+    <main className="min-h-screen text-foam">
       <SiteHeader />
-      <section className="mx-auto max-w-4xl px-5 py-10">
-        <h1 className="text-3xl font-bold text-ink">价格观察</h1>
-        <p className="mt-3 text-slate-600">只展示公开来源样本数据，标注来源、地区和日期，不代表全市场实时价格。</p>
-        <div className="mt-8">
-          <PriceTicker prices={prices} />
+      <section className="mx-auto max-w-5xl px-5 py-12">
+        <div className="mb-8 rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.09] to-white/[0.035] p-7 shadow-[0_24px_80px_rgba(0,0,0,.22)] backdrop-blur-xl">
+          <p className="signal-label">Market Watch</p>
+          <h1 className="mt-2 text-5xl font-black tracking-[-0.065em] text-foam md:text-7xl">价格观察</h1>
+          <p className="mt-4 max-w-2xl text-sm leading-7 text-foam/50">只展示公开来源样本数据，标注来源、地区和日期，不代表全市场实时价格。</p>
         </div>
+        <PriceTicker prices={prices} />
       </section>
     </main>
   );
