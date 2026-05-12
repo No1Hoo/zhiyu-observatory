@@ -7,38 +7,34 @@ export default async function TopicsPage() {
   const topics = await getTopics();
 
   return (
-    <main>
+    <main className="min-h-screen text-foam">
       <SiteHeader />
-      <section className="mx-auto max-w-5xl px-5 py-10">
-        <h1 className="text-3xl font-bold text-ink">专题</h1>
-        <p className="mt-3 text-slate-600">按专题追踪水产行业热点事件与深度报道。</p>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
+      <section className="mx-auto max-w-6xl px-5 py-12">
+        <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="signal-label">Special Topics</p>
+            <h1 className="mt-2 text-5xl font-black tracking-[-0.065em] text-foam md:text-7xl">专题</h1>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-foam/45 md:text-right">按专题追踪水产行业热点事件、技术路线与深度报道。</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2">
           {topics.map((topic) => (
-            <a
-              key={topic.id}
-              href={`/topics/${topic.slug}`}
-              className="rounded-lg border border-slate-200 bg-white p-5 transition hover:-translate-y-0.5 hover:shadow-md"
-            >
-              <div className="flex items-start justify-between">
+            <a key={topic.id} href={`/topics/${topic.slug}`} className="group relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-gradient-to-br from-white/[0.09] to-white/[0.035] p-6 shadow-[0_24px_80px_rgba(0,0,0,.22)] backdrop-blur-xl transition hover:-translate-y-1 hover:border-aqua/35">
+              <div className="absolute -right-14 -top-14 h-40 w-40 rounded-full bg-aqua/10 blur-3xl transition group-hover:bg-aqua/20" />
+              <div className="relative flex items-start justify-between gap-4">
                 <div>
-                  <h2 className="text-lg font-semibold text-ink">{topic.name}</h2>
-                  <p className="mt-2 text-sm text-slate-500">{topic.description}</p>
+                  <h2 className="text-2xl font-black tracking-[-0.04em] text-foam group-hover:text-aqua">{topic.name}</h2>
+                  <p className="mt-3 text-sm leading-7 text-foam/55">{topic.description}</p>
                 </div>
-                {topic.sponsored && (
-                  <span className="ml-3 rounded bg-amber-100 px-1.5 py-0.5 text-xs text-amber-700">赞助</span>
-                )}
+                {topic.sponsored && <span className="shrink-0 rounded-full border border-amber-300/20 bg-amber-300/10 px-3 py-1 text-xs text-amber-100">赞助</span>}
               </div>
-              <div className="mt-3 flex flex-wrap gap-1">
-                {topic.tags.split(",").map((tag) => (
-                  <span key={tag} className="rounded-full bg-cyan-50 px-2 py-0.5 text-xs text-lagoon">{tag.trim()}</span>
-                ))}
+              <div className="relative mt-5 flex flex-wrap gap-2">
+                {topic.tags.split(",").map((tag) => <span key={tag} className="rounded-full border border-aqua/20 bg-aqua/10 px-3 py-1 text-xs text-aqua">{tag.trim()}</span>)}
               </div>
             </a>
           ))}
         </div>
-        {topics.length === 0 && (
-          <div className="mt-12 text-center text-slate-400">暂无专题</div>
-        )}
+        {topics.length === 0 && <div className="mt-12 rounded-[1.6rem] border border-white/10 bg-white/[0.045] p-10 text-center text-foam/35">暂无专题</div>}
       </section>
     </main>
   );
