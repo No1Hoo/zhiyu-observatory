@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
-import { AdSlotBox } from "@/components/public/AdSlotBox";
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { AI_DISCLOSURE } from "@/lib/constants";
 import { formatDate, splitTags } from "@/lib/format";
@@ -77,7 +76,7 @@ export default async function IntelDetailPage({ params }: { params: Promise<{ sl
           <div className="relative mt-5 flex flex-wrap gap-3 text-sm text-foam/45">
             <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">{item.source.name}</span>
             <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1">{formatDate(publishedDate)}</span>
-            <a href={item.sourceUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 rounded-full border border-aqua/20 bg-aqua/10 px-3 py-1 text-aqua transition hover:bg-aqua/20">
+            <a href={item.sourceUrl || "#"} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 rounded-full border border-aqua/20 bg-aqua/10 px-3 py-1 text-aqua transition hover:bg-aqua/20">
               查看原文 <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
           </div>
@@ -101,7 +100,11 @@ export default async function IntelDetailPage({ params }: { params: Promise<{ sl
           <p className="relative mt-8 rounded-2xl border border-white/10 bg-white/[0.045] p-4 text-sm leading-7 text-foam/45">{AI_DISCLOSURE}</p>
         </div>
         <div className="space-y-5 lg:sticky lg:top-24 lg:self-start">
-          <AdSlotBox />
+          <aside className="rounded-[1.7rem] border border-dashed border-aqua/30 bg-aqua/10 p-5 backdrop-blur-xl">
+            <p className="signal-label">产业合作</p>
+            <h3 className="mt-2 text-2xl font-black tracking-[-0.04em] text-foam">合作位预留</h3>
+            <p className="mt-3 text-sm leading-7 text-foam/58">设备、饲料、苗种、动保企业可联系合作。</p>
+          </aside>
           <aside className="rounded-[1.7rem] border border-white/10 bg-white/[0.045] p-5 backdrop-blur-xl">
             <p className="signal-label">Source Trust</p>
             <p className="mt-3 text-3xl font-black tracking-[-0.05em] text-aqua">{item.source.trustLevel}/5</p>
