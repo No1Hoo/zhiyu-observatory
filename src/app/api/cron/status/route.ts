@@ -6,20 +6,17 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   const [latestRun, sourceCount, publishedCount] = await Promise.all([
     prisma.ingestionRun.findFirst({
-      orderBy: { createdAt: "desc" },
+      orderBy: { startedAt: "desc" },
       select: {
         id: true,
         trigger: true,
         status: true,
-        sourcesSeen: true,
-        sourcesSucceeded: true,
-        sourcesFailed: true,
         itemsSeen: true,
         itemsCreated: true,
         duplicates: true,
         riskCount: true,
         errorMessage: true,
-        createdAt: true,
+        startedAt: true,
         finishedAt: true
       }
     }),
