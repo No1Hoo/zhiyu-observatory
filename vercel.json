@@ -1,9 +1,16 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "buildCommand": "npm run db:generate && next build",
   "installCommand": "npm install",
   "env": {
     "DATABASE_URL": "file:/tmp/zhiyu-observatory.db",
     "NEXT_PUBLIC_SITE_URL": "https://zhiyu-observatory.vercel.app"
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/ingest",
+      "schedule": "15 22 * * *"
+    }
+  ]
 }
