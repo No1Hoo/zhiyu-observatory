@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { isAuthorizedCronRequest } from "@/lib/cron/auth";
 import { runOfficialWebIngestion } from "@/lib/ingestion/runs";
 
-export async function POST(request: Request) {
+async function runCronIngestion(request: Request) {
   if (!isAuthorizedCronRequest(request, process.env.CRON_SECRET)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
@@ -23,4 +23,12 @@ export async function POST(request: Request) {
     const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json({ error: message }, { status: 500 });
   }
+}
+
+export async function GET(request: Request) {
+  return runCronIngestion(request);
+}
+
+export async function POST(request: Request) {
+  return runCronIngestion(request);
 }
