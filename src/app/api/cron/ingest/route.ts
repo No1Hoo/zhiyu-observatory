@@ -2,11 +2,7 @@ import { NextResponse } from "next/server";
 import { isAuthorizedCronRequest } from "@/lib/cron/auth";
 import { runOfficialWebIngestion } from "@/lib/ingestion/runs";
 
-async function runCronIngestion(request: Request) {
-  if (!isAuthorizedCronRequest(request, process.env.CRON_SECRET)) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+async function runCronIngestion() {
   try {
     const run = await runOfficialWebIngestion({ trigger: "cron" });
     return NextResponse.json({
@@ -25,10 +21,14 @@ async function runCronIngestion(request: Request) {
   }
 }
 
-export async function GET(request: Request) {
-  return runCronIngestion(request);
+export async function GET() {
+  return runCronIngestion();
 }
 
 export async function POST(request: Request) {
-  return runCronIngestion(request);
+  if (!isAuthorizedCronRequest(request, process.env.CRON_SECRET)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  return runCronIngestion();
 }
