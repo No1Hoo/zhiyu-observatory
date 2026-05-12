@@ -1,6 +1,12 @@
 import { prisma } from "@/lib/db";
+import { ensureDemoData } from "@/lib/demo-data";
+
+async function ensurePublicData() {
+  await ensureDemoData(prisma);
+}
 
 export async function getHomeData() {
+  await ensurePublicData();
   const [featured, latest, prices, adSlots, topics] = await Promise.all([
     prisma.intelItem.findMany({
       where: { status: "PUBLISHED", isFeatured: true },
@@ -27,6 +33,7 @@ export async function getHomeData() {
 }
 
 export async function getIntelBySlug(slug: string) {
+  await ensurePublicData();
   return prisma.intelItem.findUnique({
     where: { slug },
     include: { source: true }
@@ -34,6 +41,7 @@ export async function getIntelBySlug(slug: string) {
 }
 
 export async function getPublishedIntelByCategory(category?: string) {
+  await ensurePublicData();
   return prisma.intelItem.findMany({
     where: {
       status: "PUBLISHED",
@@ -46,10 +54,12 @@ export async function getPublishedIntelByCategory(category?: string) {
 }
 
 export async function getSources() {
+  await ensurePublicData();
   return prisma.source.findMany({ orderBy: [{ trustLevel: "desc" }, { name: "asc" }] });
 }
 
 export async function getPriceObservations() {
+  await ensurePublicData();
   return prisma.priceObservation.findMany({
     include: { source: true },
     orderBy: { observedAt: "desc" },
@@ -58,6 +68,7 @@ export async function getPriceObservations() {
 }
 
 export async function getAllPublishedSlugs() {
+  await ensurePublicData();
   return prisma.intelItem.findMany({
     where: { status: "PUBLISHED" },
     select: { slug: true }
@@ -65,6 +76,7 @@ export async function getAllPublishedSlugs() {
 }
 
 export async function getTopCategories() {
+  await ensurePublicData();
   return prisma.intelItem.groupBy({
     by: ["category"],
     where: { status: "PUBLISHED" },
@@ -75,6 +87,7 @@ export async function getTopCategories() {
 }
 
 export async function getIntelByTag(tag: string) {
+  await ensurePublicData();
   return prisma.intelItem.findMany({
     where: {
       status: "PUBLISHED",
@@ -87,10 +100,12 @@ export async function getIntelByTag(tag: string) {
 }
 
 export async function getTopicBySlug(slug: string) {
+  await ensurePublicData();
   return prisma.topic.findUnique({ where: { slug } });
 }
 
 export async function getTopics() {
+  await ensurePublicData();
   return prisma.topic.findMany({
     orderBy: { createdAt: "desc" }
   });
