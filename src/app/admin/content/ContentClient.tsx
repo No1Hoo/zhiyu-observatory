@@ -47,11 +47,15 @@ export default function ContentClient({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-ink">内容管理</h1>
+      <div className="mb-7 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-aqua">Content Library</p>
+          <h1 className="mt-2 text-4xl font-black tracking-[-0.055em] text-foam md:text-6xl">内容管理</h1>
+        </div>
+        <p className="max-w-md text-sm leading-6 text-foam/45 md:text-right">检索、筛选、发布、撤回或删除情报内容，管理公共端可见的信息资产。</p>
+      </div>
       <ContentFilters q={q} status={status} category={category} />
-      <BulkActionBar
-        selected={Array.from(selected)}
-      />
+      <BulkActionBar selected={Array.from(selected)} />
       <ContentTable
         items={items}
         total={total}
