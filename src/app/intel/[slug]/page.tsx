@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, BookOpenText } from "lucide-react";
 import { AdSlotBox } from "@/components/public/AdSlotBox";
 import { SiteHeader } from "@/components/public/SiteHeader";
 import { AI_DISCLOSURE } from "@/lib/constants";
@@ -22,6 +22,13 @@ const CATEGORY_LABELS: Record<string, string> = {
   OVERSEAS: "海外市场",
   POLICY: "政策动向",
 };
+
+function paragraphs(text: string) {
+  return text
+    .split(/\n{2,}|\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -60,6 +67,7 @@ export default async function IntelDetailPage({ params }: { params: Promise<{ sl
 
   const categoryLabel = CATEGORY_LABELS[item.category] ?? item.category;
   const categoryHref = `/tech?category=${item.category}`;
+  const bodyParagraphs = paragraphs(item.aiSummary);
 
   return (
     <main className="min-h-screen text-foam">
@@ -89,8 +97,24 @@ export default async function IntelDetailPage({ params }: { params: Promise<{ sl
               查看原文 <ArrowUpRight className="h-3.5 w-3.5" />
             </a>
           </div>
-          <div className="relative mt-10 whitespace-pre-line border-t border-white/10 pt-8 text-base leading-9 text-foam/70">
-            {item.editorSummary || item.aiSummary}
+
+          {item.editorSummary ? (
+            <section className="relative mt-8 rounded-2xl border border-aqua/20 bg-aqua/10 p-5">
+              <div className="mb-3 flex items-center gap-2 text-aqua">
+                <BookOpenText className="h-4 w-4" />
+                <p className="signal-label">Editor Brief</p>
+              </div>
+              <p className="text-base leading-8 text-foam/72">{item.editorSummary}</p>
+            </section>
+          ) : null}
+
+          <div className="relative mt-10 border-t border-white/10 pt-8">
+            <p className="signal-label">Full Intelligence</p>
+            <div className="mt-5 space-y-6 text-base leading-9 text-foam/72">
+              {bodyParagraphs.map((paragraph, index) => (
+                <p key={`${item.slug}-${index}`}>{paragraph}</p>
+              ))}
+            </div>
           </div>
           <p className="relative mt-8 rounded-2xl border border-white/10 bg-white/[0.045] p-4 text-sm leading-7 text-foam/45">{AI_DISCLOSURE}</p>
         </div>
