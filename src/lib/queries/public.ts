@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { refreshDemoArticleBodies } from "@/lib/demo-bodies";
 import { ensureDemoData } from "@/lib/demo-data";
 
 let publicDataReady = false;
@@ -8,6 +9,7 @@ async function ensurePublicData() {
   if (publicDataReady) return;
   if (!publicDataPromise) {
     publicDataPromise = ensureDemoData(prisma)
+      .then(() => refreshDemoArticleBodies(prisma))
       .then(() => {
         publicDataReady = true;
       })
